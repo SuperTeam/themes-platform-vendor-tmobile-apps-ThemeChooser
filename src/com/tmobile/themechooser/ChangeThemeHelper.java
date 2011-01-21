@@ -4,6 +4,7 @@ import com.tmobile.themes.ThemeManager;
 import com.tmobile.themes.provider.Themes.ThemeColumns;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -112,6 +113,10 @@ public class ChangeThemeHelper {
     private final BroadcastReceiver mThemeChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
+            // Kill the current Home process, they tend to be evil and cache drawable references in all apps
+            final ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+            am.forceStopPackage("com.android.launcher");
             mHandler.scheduleFinish("Theme change 'complete', closing!");
         }
     };

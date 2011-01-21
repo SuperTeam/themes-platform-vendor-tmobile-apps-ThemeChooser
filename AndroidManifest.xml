@@ -17,12 +17,13 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:pluto="http://www.w3.org/2001/pluto.html"
-    android:sharedUserId="com.tmobile.themechooser"
+    android:sharedUserId="android.uid.system"
     package="com.tmobile.themechooser"
     android:versionCode="1"
     android:versionName="0.1">
 
     <uses-permission android:name="com.tmobile.permission.CHANGE_THEME" />
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
 
     <application
         android:label="@string/app_name"

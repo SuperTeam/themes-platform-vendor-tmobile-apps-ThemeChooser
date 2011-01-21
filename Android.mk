@@ -10,6 +10,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 
 LOCAL_PACKAGE_NAME := ThemeChooser
 
+LOCAL_CERTIFICATE := platform
+
 include $(BUILD_PACKAGE)
 
 # including the test apk
