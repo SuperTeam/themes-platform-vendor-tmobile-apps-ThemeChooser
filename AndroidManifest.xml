@@ -34,12 +34,22 @@
             android:label="@string/app_title"
             android:theme="@style/Chooser"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
             pluto:handleThemeConfigChanges="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.tmobile.intent.action.SET_THEME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.tmobile.cursor.dir/theme" />
             </intent-filter>
 
         </activity>
