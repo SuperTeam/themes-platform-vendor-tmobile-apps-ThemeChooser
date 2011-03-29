@@ -4,7 +4,6 @@ import com.tmobile.themes.ThemeManager;
 import com.tmobile.themes.provider.Themes.ThemeColumns;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -65,7 +64,7 @@ public class ChangeThemeHelper {
         mCurrentTheme = mContext.getResources().getConfiguration().customTheme;
     }
 
-    public boolean dispatchOnConfigurationChanged(Configuration newConfig) {
+    public void dispatchOnConfigurationChanged(Configuration newConfig) {
         /**
          * It is necessary to detect theme changes in this way (as well as via
          * the broadcast) in order to handle the case where the user leaves the
@@ -73,18 +72,12 @@ public class ChangeThemeHelper {
          * the theme change event is received by this activity (when it is
          * brought back to the foreground), we need to finish automatically
          * rather than present a UI with a potentially stale theme applied.
-         *
-         * @param newConfig
-         * @return boolean finishing - true if finish() is scheduled
          */
-        boolean finishing = false;
         CustomTheme newTheme = newConfig.customTheme;
         if (newTheme != null &&
                 (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
             mHandler.scheduleFinish("Theme config change, closing!");
-            finishing = true;
         }
-        return finishing;
     }
 
     public void dispatchOnPause() {
@@ -122,10 +115,6 @@ public class ChangeThemeHelper {
     private final BroadcastReceiver mThemeChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            // Kill the current Home process, they tend to be evil and cache drawable references in all apps
-            final ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-            am.forceStopPackage("com.android.launcher");
             mHandler.scheduleFinish("Theme change 'complete', closing!");
         }
     };
